@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Taransfer</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="Navbar-Right-Links-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+
+    <body style="background: rgba(255,255,255,0);"><!-- update the version number as needed -->
+    <script defer src="/__/firebase/10.10.0/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/10.10.0/firebase-auth-compat.js"></script>
+    <script defer src="/__/firebase/10.10.0/firebase-database-compat.js"></script>
+    <script defer src="/__/firebase/10.10.0/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/10.10.0/firebase-functions-compat.js"></script>
+    <script defer src="/__/firebase/10.10.0/firebase-messaging-compat.js"></script>
+    <script defer src="/__/firebase/10.10.0/firebase-storage-compat.js"></script>
+    <script defer src="/__/firebase/10.10.0/firebase-analytics-compat.js"></script>
+    <script defer src="/__/firebase/10.10.0/firebase-remote-config-compat.js"></script>
+    <script defer src="/__/firebase/10.10.0/firebase-performance-compat.js"></script>
+    <!--
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <script defer src="script.js"></script>
+    <script async src="phone-auth.js"></script>
+    <script defer src="user_auth.js"></script>
+
+</head>
+
+<body>
+    <script>
+      document.addEventListener("DOMContentLoaded", event => {
+        const app = firebase.app();
+    });
+
+
+    function googleLogin() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+
+        firebase.auth().signInWithPopup(provider)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(console.log)
+
+    }
+
+    </script>
+    <nav class="navbar navbar-expand-md bg-body py-3">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="text-primary"><strong>Taransfer</strong></span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-2">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><button class="nav-link" id="home">Home</button></li>
+                    <li class="nav-item"><button class="nav-link" id="about">About</button></li>
+                    <li class="nav-item"><button class="nav-link" id="howtouse">How to Use</button></li>
+
+                </ul>
+            </div>
+            <button class="btn btn-outline-primary" type="button" style="padding-right: 20px;padding-left: 20px;">Login</button>
+        </div>
+    </nav>
+<div id="content">
+    <div id="homePage" class="page container-fluid py-4 py-xl-5" style="height: 80vh;">
+        <div class="row gy-4 gy-md-0" style="height: 100%;">
+            <div class="col align-self-center">
+                <div class="text-white p-7 p-md-5" style="width: 80%;margin-left: 20%;">
+                    <h2 class="fw-bold text-white mb-3"><span style="font-weight: normal !important;">What </span>Tara<span style="font-weight: normal !important;">nsfer is all about?</span></h2>
+                    <p class="mb-4">Taransfer is a free online service where people can share any types of files in an instant. Tara! Transfer files with ease, quick, and convinient</p>
+                    <button class="btn btn-light" type="button" onclick="googleLogin()" id="google-login-btn">Login with <strong>Google</strong></button>
+                    <!-- Welcome Message (hidden initially) -->
+                    <div id="welcome-message" style="display: none;">Welcome! <span id="user-name"></span></div>
+
+                    <button class="btn btn-light" type="button" id="phone-login-btn">Login with <strong>Phone</strong></button>
+                    <div id="recaptcha-container"></div>
+
+                    <input type="text" id="verification-code" placeholder="Enter Verification Code">
+                    <div id="statusMessage" style="color: green;"></div>
+                    <div id="errorMessage" style="color: red;"></div>
+
+                    <button id="logout-btn" style="display: none;">Logout</button>
+
+                </div>
+            </div>
+            <div class="col-5 d-md-flex align-items-md-center">
+                <div class="card" style="margin-right: 50px;border-radius: 15px;">
+                    <div class="card-body fs-1 text-center">
+                        <h2 class="card-title">Taransfer</h2>
+                        <form>
+                            <h6 class="mb-2">Upload your file and Enter the Receiver's Email</h6>
+                            <input class="form-control" type="file" id="fileToUpload" name="fileToUpload" style="margin-top: 16px;">
+                            <!-- <input class="btn btn-primary" type="submit" value="Tara! Upload!" style="margin-top: 16px;width: 60%;"> -->
+                            <!-- <h5 class="mb-2" style="margin-top: 16px;">Enter Email</h5> -->
+                            <input class="form-control" type="text" placeholder="Enter email" name="email" style="margin-top: 16px;">
+                            <input class="btn btn-primary" value="Tara! Send It!" id="upload" onclick="uploadImage()" style="margin-top: 16px;width: 60%;">
+
+
+							<div class="card-body fs-1" style="padding-left:18%;">
+								<div id="ShowUniqueID" block>
+								  <h6 class="mb-2">Unique ID</h6>
+								  <input class="form-control" type="text" id="showunique" value="" disabled></input>
+								</div>
+							</div>
+							<hr>
+
+                            <div class="Download" id="downloadiv">
+                              <h6>Receive File</h6>
+                              <input class="form-control" type="text" id="unique" placeholder="Enter Unique ID">
+                              <center><button class="btn btn-primary" id="show" onclick="showimage()">Download<img id="downimg" src="download.png"
+                                    alt="" /></button>
+                            </div>
+                            <!--
+                        <div class="Download" id="downloadiv">
+                            <h5 class="mb-2" style="margin-top: 30px;">Receive your file</h5><input class="form-control" type="text" value="Enter Unique ID">
+                        <input class="btn btn-primary" type="submit" value="Tara! Download!" style="margin-top: 16px;width: 60%;margin-bottom: 16px;">
+                        </div>
+                      -->
+						</form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<!--AAAAAAAAAAAAAAAAAAAAAAAAAAA-->
+
+	<div id="howtousePage" class="page container text-light py-4 py-xl-5">
+		<div class="row mb-5">
+			<div class="col-md-8 col-xl-6 text-center mx-auto">
+				<h2>Heading</h2>
+				<p class="w-lg-50">Curae hendrerit donec commodo hendrerit egestas tempus, turpis facilisis nostra nunc. Vestibulum dui eget ultrices.</p>
+			</div>
+		</div>
+		<h2>Uploading</h2>
+		<div class="row">
+			<div class="col">
+				<div class="card"><img class="card-img-top w-100 d-block fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="height: 200px;" />
+					<div class="card-body p-4">
+						<p class="text-primary card-text mb-0">Step 1</p>
+						<h4 class="card-title">Lorem libero donec</h4>
+						<p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card"><img class="card-img-top w-100 d-block fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="height: 200px;" />
+					<div class="card-body p-4">
+						<p class="text-primary card-text mb-0">Step 2</p>
+						<h4 class="card-title">Lorem libero donec</h4>
+						<p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card"><img class="card-img-top w-100 d-block fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="height: 200px;" />
+					<div class="card-body p-4">
+						<p class="text-primary card-text mb-0">Step 3</p>
+						<h4 class="card-title">Lorem libero donec</h4>
+						<p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-5" style="margin-top: 48px;">
+			<div class="col-md-8 col-xl-6 text-center mx-auto"></div>
+		</div>
+		<h2>Downloading</h2>
+		<div class="row">
+			<div class="col">
+				<div class="card"><img class="card-img-top w-100 d-block fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="height: 200px;" />
+					<div class="card-body p-4">
+						<p class="text-primary card-text mb-0">Step 1</p>
+						<h4 class="card-title">Lorem libero donec</h4>
+						<p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card"><img class="card-img-top w-100 d-block fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="height: 200px;" />
+					<div class="card-body p-4">
+						<p class="text-primary card-text mb-0">Step 2</p>
+						<h4 class="card-title">Lorem libero donec</h4>
+						<p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card"><img class="card-img-top w-100 d-block fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="height: 200px;" />
+					<div class="card-body p-4">
+						<p class="text-primary card-text mb-0">Step 3</p>
+						<h4 class="card-title">Lorem libero donec</h4>
+						<p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--AAAAAAAAAAAAAAAAAAAAAAA-->
+
+	<div id="aboutPage" class="page container text-light py-4 py-xl-5">
+		<div class="row gy-4 gy-md-0">
+			<div class="col-md-6">
+				<div class="p-xl-5 m-xl-5"><img class="rounded img-fluid w-100 fit-cover" style="min-height: 300px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" /></div>
+			</div>
+			<div class="col-md-6 d-md-flex align-items-md-center">
+				<div style="max-width: 350px;">
+					<h2 class="text-uppercase fw-bold">About US</h2>
+					<p class="my-3">Tincidunt laoreet leo, adipiscing taciti tempor. Primis senectus sapien, risus donec ad fusce augue interdum.</p><a class="btn btn-primary btn-lg me-2" role="button" href="#">Button</a><a class="btn btn-outline-primary btn-lg" role="button" href="#">Button</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--AAAAAAAAAAAAAAAAAAAAAAAA-->
+
+</div>
+
+
+    <nav class="navbar navbar-expand-md fixed-bottom bg-dark">
+        <div class="container-fluid">
+            <div class="text-center" style="width: 100%;">
+                <p class="text-light mb-0">Copyright © 2024 Taransfer</p>
+            </div>
+        </div>
+    </nav>
+
+	<script>
+        // Hide all pages initially
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => page.classList.remove('active'));
+
+
+        // Show the home page initially
+        document.getElementById('homePage').classList.add('active');
+
+        // Add click event listeners to the buttons
+        document.getElementById('home').addEventListener('click', () => {
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById('homePage').classList.add('active');
+        });
+
+
+        document.getElementById('about').addEventListener('click', () => {
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById('aboutPage').classList.add('active');
+        });
+
+
+        document.getElementById('howtouse').addEventListener('click', () => {
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById('howtousePage').classList.add('active');
+        });
+
+    </script>
+
+    <script src="bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+body {
+  animation: bgcolor infinite 30s;
+}
+
+/* Add fade-in animation */
+
+.page {
+  opacity: 0;
+  animation: fadeOut 0.7s ease-in;
+  display: none;
+}
+
+
+.page.active {
+  opacity: 1;
+  animation: fadeIn 0.5s ease-in;
+  display: block;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/*Background changing color*/
+
+@keyframes bgcolor {
+  0% {
+    background: #00c9ed;
+  }
+  50% {
+    background: #c8b017;
+  }
+  100% {
+    background: #00c9ed;
+  }
+}
+
+#showunique {
+  width: 200px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 50px;
+  color: #212529;
+  background-color: #ceff89;
+  border-color: #212529;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+#showunique:hover {
+  background-color: #212529;
+  color: #ceff89;
+  border-color: #212529;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+#ShowUniqueID {
+  width: max-content;
+  margin-top: 10px;
+  text-align: center;
+
+
+}
